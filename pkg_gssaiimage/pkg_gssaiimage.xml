@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="package" method="upgrade">
+	<name>pkg_gssaiimage</name>
+	<packagename>gssaiimage</packagename>
+	<author>GSS</author>
+	<creationDate>2026-10-17</creationDate>
+	<copyright>(C) 2026 GSS</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE</license>
+	<version>2.0.0</version>
+	<description>PKG_GSSAIIMAGE_XML_DESCRIPTION</description>
+	<scriptfile>script.php</scriptfile>
+
+	<files folder="packages">
+		<file type="plugin" id="gssaiimage" group="system">plg_system_gssaiimage.zip</file>
+		<file type="plugin" id="gssaiimageflexi" group="system">plg_system_gssaiimageflexi.zip</file>
+	</files>
+
+	<languages folder="language">
+		<language tag="zh-TW">zh-TW/pkg_gssaiimage.sys.ini</language>
+		<language tag="en-GB">en-GB/pkg_gssaiimage.sys.ini</language>
+	</languages>
+</extension>

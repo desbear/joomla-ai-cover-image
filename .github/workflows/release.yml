@@ -1,0 +1,54 @@
+name: Build package
+
+on:
+  push:
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: curl, gd, mbstring, zip
+
+      - name: Lint PHP
+        run: find plg_system_gssaiimage plg_system_gssaiimageflexi pkg_gssaiimage -name '*.php' -print0 | xargs -0 -n1 php -l > /dev/null
+
+      - name: Unit tests
+        run: |
+          php tests/flow_test.php
+          php tests/security_test.php
+          php tests/openwebui_test.php
+          php tests/catalog_test.php
+
+      - name: Check version matches tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          VERSION=$(sed -n 's:.*<version>\(.*\)</version>.*:\1:p' pkg_gssaiimage/pkg_gssaiimage.xml | head -1)
+          test "v$VERSION" = "$GITHUB_REF_NAME" || { echo "pkg_gssaiimage.xml version $VERSION does not match tag $GITHUB_REF_NAME"; exit 1; }
+
+      - name: Build
+        run: ./build.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pkg_gssaiimage
+          path: dist/*.zip
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITLE: AI Cover Image for Joomla
+        run: |
+          awk -v v="${GITHUB_REF_NAME#v}" '/^## /{if(f)exit; f=index($0,v)>0} f' CHANGELOG.md > notes.md
+          gh release create "$GITHUB_REF_NAME" dist/*.zip --title "$TITLE $GITHUB_REF_NAME" --notes-file notes.md

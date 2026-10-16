@@ -1,0 +1,237 @@
+/**
+ * GSS AI Image - style skills in the plugin settings.
+ *
+ * @copyright  (C) 2026 GSS
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
+
+.gssai-skills {
+  --gssai-blue: #1a5bff;
+  --gssai-light: #e6f0ff;
+  --gssai-line: #d6e2f7;
+  --gssai-ink-2: #55617a;
+  max-width: 880px;
+  padding: 4px;
+  border: 2px dashed transparent;
+  border-radius: 14px;
+}
+
+.gssai-skills.is-dropping {
+  background: var(--gssai-light);
+  border-color: var(--gssai-blue);
+}
+
+.gssai-skills-list {
+  display: grid;
+  gap: 12px;
+}
+
+.gssai-skill {
+  padding: 14px 18px;
+  background: #fff;
+  border: 1px solid var(--gssai-line);
+  border-radius: 12px;
+}
+
+.gssai-skill.is-chosen {
+  background: #f7faff;
+  border-color: var(--gssai-blue);
+  box-shadow: 0 0 0 1px var(--gssai-blue);
+}
+
+.gssai-skill-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.gssai-skill-head input {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--gssai-blue);
+}
+
+.gssai-skill-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+}
+
+.gssai-skill-badge {
+  padding: 1px 10px;
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 600;
+  background: var(--gssai-blue);
+  border-radius: 999px;
+}
+
+.gssai-skill-desc,
+.gssai-skill-facts {
+  margin: 6px 0 0 28px;
+  color: var(--gssai-ink-2);
+  font-size: .875rem;
+}
+
+.gssai-skill-desc {
+  display: -webkit-box;
+  overflow: hidden;
+  color: inherit;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.gssai-skill-desc:empty,
+.gssai-skill-facts:empty {
+  display: none;
+}
+
+.gssai-skill-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 0 28px;
+}
+
+.gssai-skill-images img {
+  width: 96px;
+  height: 60px;
+  object-fit: cover;
+  background: #fff;
+  border: 1px solid var(--gssai-line);
+  border-radius: 6px;
+}
+
+.gssai-skill-actions {
+  margin: 12px 0 0 28px;
+}
+
+.gssai-skills-upload {
+  margin: 16px 0 0;
+}
+
+.gssai-skills-upload [hidden] {
+  display: none !important;
+}
+
+.gssai-skills-hint {
+  margin: 8px 0 0;
+  color: var(--gssai-ink-2);
+  font-size: .875rem;
+}
+
+.gssai-skills-message {
+  margin: 12px 0 0;
+  padding: 9px 14px;
+  font-size: .875rem;
+  border-radius: 10px;
+}
+
+.gssai-skills-message:empty {
+  display: none;
+}
+
+.gssai-skills-message.is-info {
+  color: #173a9e;
+  background: var(--gssai-light);
+}
+
+.gssai-skills-message.is-ok {
+  color: #0b5a43;
+  background: #e3f6ee;
+}
+
+.gssai-skills-message.is-error {
+  color: #b3261e;
+  background: #fdecea;
+}
+
+@media (max-width: 600px) {
+  .gssai-skill-desc,
+  .gssai-skill-facts,
+  .gssai-skill-images,
+  .gssai-skill-actions {
+    margin-left: 0;
+  }
+}
+
+/* ------------------------------------------------------- sections, sources */
+
+.gssai-skills-heading {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.gssai-skills-section {
+  margin: 28px 0 0;
+}
+
+.gssai-skills-section > .gssai-skills-hint {
+  margin: -4px 0 12px;
+}
+
+.gssai-skills-upload {
+  margin: 28px 0 0;
+}
+
+.gssai-sources {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.gssai-source {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid var(--gssai-line);
+  border-radius: 12px;
+}
+
+.gssai-source.is-installed {
+  background: #f7faff;
+}
+
+.gssai-source-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+}
+
+.gssai-source-kind {
+  padding: 1px 8px;
+  color: #173a9e;
+  font-size: .75rem;
+  background: var(--gssai-light);
+  border-radius: 999px;
+}
+
+.gssai-skill-badge.is-quiet {
+  color: #0b5a43;
+  background: #e3f6ee;
+}
+
+.gssai-source-desc {
+  flex: 1 1 auto;
+  margin: 0;
+  font-size: .875rem;
+}
+
+.gssai-source .gssai-skill-facts {
+  margin: 0;
+}
+
+.gssai-source .btn {
+  align-self: flex-start;
+  margin-top: 4px;
+}

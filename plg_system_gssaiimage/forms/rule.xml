@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<field name="catid" type="category" extension="com_content" multiple="true" required="true"
+		layout="joomla.form.field.list-fancy-select"
+		label="PLG_SYSTEM_GSSAIIMAGE_RULE_CATEGORY_LABEL"
+		description="PLG_SYSTEM_GSSAIIMAGE_RULE_CATEGORY_DESC" />
+	<field name="include_children" type="radio" default="1" layout="joomla.form.field.radio.switcher"
+		label="PLG_SYSTEM_GSSAIIMAGE_RULE_CHILDREN_LABEL"
+		description="PLG_SYSTEM_GSSAIIMAGE_RULE_CHILDREN_DESC">
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field>
+	<field name="fields" type="text" default="" filter="string" hint="og_image"
+		label="PLG_SYSTEM_GSSAIIMAGE_RULE_FIELDS_LABEL"
+		description="PLG_SYSTEM_GSSAIIMAGE_RULE_FIELDS_DESC" />
+	<field name="prompt" type="textarea" rows="4" filter="string"
+		label="PLG_SYSTEM_GSSAIIMAGE_RULE_PROMPT_LABEL"
+		description="PLG_SYSTEM_GSSAIIMAGE_RULE_PROMPT_DESC" />
+	<field name="ratio" type="text" default="" hint="16:9"
+		label="PLG_SYSTEM_GSSAIIMAGE_RATIO_LABEL"
+		description="PLG_SYSTEM_GSSAIIMAGE_RULE_RATIO_DESC">
+		<option value="16:9">16:9</option>
+		<option value="3:2">3:2</option>
+		<option value="4:3">4:3</option>
+		<option value="1:1">1:1</option>
+		<option value="4:5">4:5</option>
+		<option value="3:4">3:4</option>
+		<option value="9:16">9:16</option>
+		<option value="21:9">21:9</option>
+		<option value="1200x630">1200x630</option>
+	</field>
+	<field name="max_width" type="number" default="" min="200" max="4096" step="10" hint="1200"
+		label="PLG_SYSTEM_GSSAIIMAGE_MAX_WIDTH_LABEL"
+		description="PLG_SYSTEM_GSSAIIMAGE_RULE_MAX_WIDTH_DESC" />
+	<field name="layout_mode" type="list" default=""
+		label="PLG_SYSTEM_GSSAIIMAGE_LAYOUT_LABEL"
+		description="PLG_SYSTEM_GSSAIIMAGE_RULE_INHERIT_DESC">
+		<option value="">PLG_SYSTEM_GSSAIIMAGE_RULE_INHERIT</option>
+		<option value="auto">PLG_SYSTEM_GSSAIIMAGE_UI_LAYOUT_AUTO</option>
+		<option value="light">PLG_SYSTEM_GSSAIIMAGE_UI_LAYOUT_LIGHT</option>
+		<option value="collage">PLG_SYSTEM_GSSAIIMAGE_UI_LAYOUT_COLLAGE</option>
+		<option value="dark">PLG_SYSTEM_GSSAIIMAGE_UI_LAYOUT_DARK</option>
+		<option value="geometric">PLG_SYSTEM_GSSAIIMAGE_UI_LAYOUT_GEOMETRIC</option>
+	</field>
+	<field name="text_mode" type="list" default=""
+		label="PLG_SYSTEM_GSSAIIMAGE_TEXT_MODE_LABEL"
+		description="PLG_SYSTEM_GSSAIIMAGE_RULE_INHERIT_DESC">
+		<option value="">PLG_SYSTEM_GSSAIIMAGE_RULE_INHERIT</option>
+		<option value="none">PLG_SYSTEM_GSSAIIMAGE_UI_TEXT_NONE</option>
+		<option value="title">PLG_SYSTEM_GSSAIIMAGE_UI_TEXT_TITLE</option>
+	</field>
+	<field name="provider" type="list" default=""
+		label="PLG_SYSTEM_GSSAIIMAGE_UI_PROVIDER"
+		description="PLG_SYSTEM_GSSAIIMAGE_RULE_INHERIT_DESC">
+		<option value="">PLG_SYSTEM_GSSAIIMAGE_RULE_INHERIT</option>
+		<option value="openai">PLG_SYSTEM_GSSAIIMAGE_PROVIDER_OPENAI</option>
+		<option value="gemini">PLG_SYSTEM_GSSAIIMAGE_PROVIDER_GEMINI</option>
+		<option value="openwebui">PLG_SYSTEM_GSSAIIMAGE_PROVIDER_OPENWEBUI</option>
+	</field>
+</form>

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="system" method="upgrade">
+	<name>plg_system_gssaiimage</name>
+	<author>GSS</author>
+	<creationDate>2026-10-17</creationDate>
+	<copyright>(C) 2026 GSS</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE</license>
+	<version>2.0.0</version>
+	<description>PLG_SYSTEM_GSSAIIMAGE_XML_DESCRIPTION</description>
+	<namespace path="src">Gss\Plugin\System\GssAiImage</namespace>
+
+	<files>
+		<folder plugin="gssaiimage">services</folder>
+		<folder>src</folder>
+		<folder>forms</folder>
+		<folder>language</folder>
+		<filename>LICENSE</filename>
+	</files>
+
+	<media destination="plg_system_gssaiimage" folder="media">
+		<folder>js</folder>
+		<folder>css</folder>
+	</media>
+
+	<config>
+		<fields name="params">
+			<fieldset name="basic" label="PLG_SYSTEM_GSSAIIMAGE_FIELDSET_API">
+				<field name="provider_default" type="list" default="openai"
+					label="PLG_SYSTEM_GSSAIIMAGE_PROVIDER_DEFAULT_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_PROVIDER_DEFAULT_DESC">
+					<option value="openai">PLG_SYSTEM_GSSAIIMAGE_PROVIDER_OPENAI</option>
+					<option value="gemini">PLG_SYSTEM_GSSAIIMAGE_PROVIDER_GEMINI</option>
+					<option value="openwebui">PLG_SYSTEM_GSSAIIMAGE_PROVIDER_OPENWEBUI</option>
+				</field>
+				<field name="allow_provider_switch" type="radio" default="1" layout="joomla.form.field.radio.switcher"
+					label="PLG_SYSTEM_GSSAIIMAGE_ALLOW_PROVIDER_SWITCH_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_ALLOW_PROVIDER_SWITCH_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field name="openai_note" type="note" label="PLG_SYSTEM_GSSAIIMAGE_OPENAI_NOTE_LABEL" description="PLG_SYSTEM_GSSAIIMAGE_OPENAI_NOTE_DESC" />
+				<field name="openai_api_key" type="password" default="" autocomplete="new-password" filter="raw" maxlength="500" class="w-100"
+					label="PLG_SYSTEM_GSSAIIMAGE_OPENAI_KEY_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_OPENAI_KEY_DESC" />
+				<field name="openai_image_model" type="text" default="gpt-image-1"
+					label="PLG_SYSTEM_GSSAIIMAGE_IMAGE_MODEL_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_OPENAI_IMAGE_MODEL_DESC">
+					<option value="gpt-image-2">gpt-image-2</option>
+					<option value="gpt-image-1">gpt-image-1</option>
+					<option value="gpt-image-1-mini">gpt-image-1-mini</option>
+					<option value="gpt-image-1.5">gpt-image-1.5</option>
+				</field>
+				<field name="openai_quality" type="list" default="medium"
+					label="PLG_SYSTEM_GSSAIIMAGE_OPENAI_QUALITY_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_OPENAI_QUALITY_DESC">
+					<option value="low">PLG_SYSTEM_GSSAIIMAGE_QUALITY_LOW</option>
+					<option value="medium">PLG_SYSTEM_GSSAIIMAGE_QUALITY_MEDIUM</option>
+					<option value="high">PLG_SYSTEM_GSSAIIMAGE_QUALITY_HIGH</option>
+					<option value="auto">PLG_SYSTEM_GSSAIIMAGE_QUALITY_AUTO</option>
+				</field>
+				<field name="openai_base_url" type="url" default="" filter="url" validate="url" hint="https://api.openai.com/v1"
+					label="PLG_SYSTEM_GSSAIIMAGE_OPENAI_BASE_URL_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_OPENAI_BASE_URL_DESC" />
+
+				<field name="gemini_note" type="note" label="PLG_SYSTEM_GSSAIIMAGE_GEMINI_NOTE_LABEL" description="PLG_SYSTEM_GSSAIIMAGE_GEMINI_NOTE_DESC" />
+				<field name="gemini_api_key" type="password" default="" autocomplete="new-password" filter="raw" maxlength="500" class="w-100"
+					label="PLG_SYSTEM_GSSAIIMAGE_GEMINI_KEY_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_GEMINI_KEY_DESC" />
+				<field name="gemini_image_model" type="text" default="gemini-2.5-flash-image"
+					label="PLG_SYSTEM_GSSAIIMAGE_IMAGE_MODEL_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_GEMINI_IMAGE_MODEL_DESC">
+					<option value="gemini-2.5-flash-image">gemini-2.5-flash-image (Nano Banana)</option>
+					<option value="gemini-3-pro-image-preview">gemini-3-pro-image-preview (Nano Banana Pro)</option>
+				</field>
+				<field name="gemini_image_size" type="list" default=""
+					label="PLG_SYSTEM_GSSAIIMAGE_GEMINI_SIZE_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_GEMINI_SIZE_DESC">
+					<option value="">PLG_SYSTEM_GSSAIIMAGE_GEMINI_SIZE_DEFAULT</option>
+					<option value="1K">1K</option>
+					<option value="2K">2K</option>
+					<option value="4K">4K</option>
+				</field>
+
+				<field name="openwebui_note" type="note" label="PLG_SYSTEM_GSSAIIMAGE_OPENWEBUI_NOTE_LABEL" description="PLG_SYSTEM_GSSAIIMAGE_OPENWEBUI_NOTE_DESC" />
+				<field name="openwebui_base_url" type="url" default="" filter="url" validate="url" hint="https://ai.example.com" class="w-100"
+					label="PLG_SYSTEM_GSSAIIMAGE_OPENWEBUI_BASE_URL_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_OPENWEBUI_BASE_URL_DESC" />
+				<field name="openwebui_api_key" type="password" default="" autocomplete="new-password" filter="raw" maxlength="500" class="w-100"
+					label="PLG_SYSTEM_GSSAIIMAGE_OPENWEBUI_KEY_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_OPENWEBUI_KEY_DESC" />
+				<field name="openwebui_image_model" type="text" default=""
+					label="PLG_SYSTEM_GSSAIIMAGE_IMAGE_MODEL_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_OPENWEBUI_IMAGE_MODEL_DESC">
+					<option value="gpt-image-1">gpt-image-1</option>
+					<option value="gpt-image-1-mini">gpt-image-1-mini</option>
+					<option value="dall-e-3">dall-e-3</option>
+				</field>
+				<field name="openwebui_text_model" type="text" default=""
+					label="PLG_SYSTEM_GSSAIIMAGE_OPENWEBUI_TEXT_MODEL_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_OPENWEBUI_TEXT_MODEL_DESC">
+					<option value="gpt-4o-mini">gpt-4o-mini</option>
+					<option value="gpt-4.1-mini">gpt-4.1-mini</option>
+					<option value="gemini-2.5-flash">gemini-2.5-flash</option>
+				</field>
+				<field name="openwebui_delete_files" type="radio" default="1" layout="joomla.form.field.radio.switcher"
+					label="PLG_SYSTEM_GSSAIIMAGE_OPENWEBUI_DELETE_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_OPENWEBUI_DELETE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field name="limits_note" type="note" label="PLG_SYSTEM_GSSAIIMAGE_LIMITS_NOTE_LABEL" />
+				<field name="timeout" type="number" default="180" min="30" max="300" step="10" filter="integer"
+					label="PLG_SYSTEM_GSSAIIMAGE_TIMEOUT_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_TIMEOUT_DESC" />
+				<field name="rate_limit" type="number" default="30" min="0" max="1000" step="1" filter="integer"
+					label="PLG_SYSTEM_GSSAIIMAGE_RATE_LIMIT_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_RATE_LIMIT_DESC" />
+			</fieldset>
+
+			<fieldset name="fieldrules" label="PLG_SYSTEM_GSSAIIMAGE_FIELDSET_FIELDS" description="PLG_SYSTEM_GSSAIIMAGE_FIELDSET_FIELDS_DESC">
+				<field name="field_rules" type="subform" multiple="true" min="0"
+					formsource="plugins/system/gssaiimage/forms/field.xml"
+					layout="joomla.form.field.subform.repeatable"
+					buttons="add,remove,move"
+					label="PLG_SYSTEM_GSSAIIMAGE_FIELD_RULES_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_FIELD_RULES_DESC" />
+			</fieldset>
+
+			<fieldset name="rules" label="PLG_SYSTEM_GSSAIIMAGE_FIELDSET_RULES" description="PLG_SYSTEM_GSSAIIMAGE_FIELDSET_RULES_DESC">
+				<field name="rules" type="subform" multiple="true" min="0"
+					formsource="plugins/system/gssaiimage/forms/rule.xml"
+					layout="joomla.form.field.subform.repeatable"
+					buttons="add,remove,move"
+					label="PLG_SYSTEM_GSSAIIMAGE_RULES_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_RULES_DESC" />
+			</fieldset>
+
+			<fieldset name="output" label="PLG_SYSTEM_GSSAIIMAGE_FIELDSET_OUTPUT" description="PLG_SYSTEM_GSSAIIMAGE_FIELDSET_OUTPUT_DESC">
+				<field name="default_ratio" type="text" default="16:9"
+					label="PLG_SYSTEM_GSSAIIMAGE_RATIO_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_RATIO_DESC">
+					<option value="16:9">16:9</option>
+					<option value="3:2">3:2</option>
+					<option value="4:3">4:3</option>
+					<option value="1:1">1:1</option>
+					<option value="4:5">4:5</option>
+					<option value="3:4">3:4</option>
+					<option value="9:16">9:16</option>
+					<option value="21:9">21:9</option>
+					<option value="1200x630">1200x630</option>
+				</field>
+				<field name="default_max_width" type="number" default="1200" min="200" max="4096" step="10" filter="integer"
+					label="PLG_SYSTEM_GSSAIIMAGE_MAX_WIDTH_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_MAX_WIDTH_DESC" />
+				<field name="allow_size_override" type="radio" default="1" layout="joomla.form.field.radio.switcher"
+					label="PLG_SYSTEM_GSSAIIMAGE_ALLOW_SIZE_OVERRIDE_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_ALLOW_SIZE_OVERRIDE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="output_format" type="list" default="webp"
+					label="PLG_SYSTEM_GSSAIIMAGE_FORMAT_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_FORMAT_DESC">
+					<option value="webp">WebP</option>
+					<option value="jpg">JPEG</option>
+					<option value="png">PNG</option>
+				</field>
+				<field name="output_quality" type="number" default="85" min="40" max="100" step="1" filter="integer"
+					label="PLG_SYSTEM_GSSAIIMAGE_QUALITY_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_QUALITY_DESC" />
+				<field name="save_folder" type="text" default="images/ai-generated" filter="path"
+					label="PLG_SYSTEM_GSSAIIMAGE_SAVE_FOLDER_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_SAVE_FOLDER_DESC" />
+				<field name="draft_ttl_hours" type="number" default="24" min="1" max="720" step="1" filter="integer"
+					label="PLG_SYSTEM_GSSAIIMAGE_DRAFT_TTL_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_DRAFT_TTL_DESC" />
+			</fieldset>
+
+			<fieldset name="style" label="PLG_SYSTEM_GSSAIIMAGE_FIELDSET_STYLE" description="PLG_SYSTEM_GSSAIIMAGE_FIELDSET_STYLE_DESC">
+				<field name="style_skill" type="skillmanager" default=""
+					addfieldprefix="Gss\Plugin\System\GssAiImage\Field"
+					label="PLG_SYSTEM_GSSAIIMAGE_STYLE_SKILL_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_STYLE_SKILL_DESC" />
+				<field name="allow_style_switch" type="radio" default="1" layout="joomla.form.field.radio.switcher"
+					label="PLG_SYSTEM_GSSAIIMAGE_ALLOW_STYLE_SWITCH_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_ALLOW_STYLE_SWITCH_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="layout_mode" type="list" default="auto"
+					label="PLG_SYSTEM_GSSAIIMAGE_LAYOUT_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_LAYOUT_DESC">
+					<option value="auto">PLG_SYSTEM_GSSAIIMAGE_UI_LAYOUT_AUTO</option>
+					<option value="light">PLG_SYSTEM_GSSAIIMAGE_UI_LAYOUT_LIGHT</option>
+					<option value="collage">PLG_SYSTEM_GSSAIIMAGE_UI_LAYOUT_COLLAGE</option>
+					<option value="dark">PLG_SYSTEM_GSSAIIMAGE_UI_LAYOUT_DARK</option>
+					<option value="geometric">PLG_SYSTEM_GSSAIIMAGE_UI_LAYOUT_GEOMETRIC</option>
+				</field>
+				<field name="text_mode" type="list" default="none"
+					label="PLG_SYSTEM_GSSAIIMAGE_TEXT_MODE_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_TEXT_MODE_DESC">
+					<option value="none">PLG_SYSTEM_GSSAIIMAGE_UI_TEXT_NONE</option>
+					<option value="title">PLG_SYSTEM_GSSAIIMAGE_UI_TEXT_TITLE</option>
+				</field>
+				<field name="style_colors" type="text" default="" filter="string" hint="#1A5BFF, #7C3AED" class="w-100"
+					label="PLG_SYSTEM_GSSAIIMAGE_STYLE_COLORS_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_STYLE_COLORS_DESC" />
+				<field name="use_reference_images" type="radio" default="1" layout="joomla.form.field.radio.switcher"
+					label="PLG_SYSTEM_GSSAIIMAGE_USE_REFERENCES_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_USE_REFERENCES_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="max_reference_images" type="number" default="2" min="0" max="6" step="1" filter="integer"
+					showon="use_reference_images:1"
+					label="PLG_SYSTEM_GSSAIIMAGE_MAX_REFERENCES_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_MAX_REFERENCES_DESC" />
+				<field name="reference_folder" type="text" default="" filter="path" hint="images/style-reference"
+					showon="use_reference_images:1"
+					label="PLG_SYSTEM_GSSAIIMAGE_REFERENCE_FOLDER_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_REFERENCE_FOLDER_DESC" />
+				<field name="allow_user_references" type="radio" default="1" layout="joomla.form.field.radio.switcher"
+					label="PLG_SYSTEM_GSSAIIMAGE_ALLOW_USER_REFERENCES_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_ALLOW_USER_REFERENCES_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="style_prompt_custom" type="textarea" default="" rows="5" filter="string"
+					label="PLG_SYSTEM_GSSAIIMAGE_STYLE_PROMPT_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_STYLE_PROMPT_DESC" />
+				<field name="avoid_custom" type="textarea" default="" rows="3" filter="string"
+					label="PLG_SYSTEM_GSSAIIMAGE_AVOID_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_AVOID_DESC" />
+
+				<field name="concept_note" type="note" label="PLG_SYSTEM_GSSAIIMAGE_CONCEPT_NOTE_LABEL" description="PLG_SYSTEM_GSSAIIMAGE_CONCEPT_NOTE_DESC" />
+				<field name="use_concept" type="radio" default="1" layout="joomla.form.field.radio.switcher"
+					label="PLG_SYSTEM_GSSAIIMAGE_USE_CONCEPT_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_USE_CONCEPT_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="concept_provider" type="list" default="same" showon="use_concept:1"
+					label="PLG_SYSTEM_GSSAIIMAGE_CONCEPT_PROVIDER_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_CONCEPT_PROVIDER_DESC">
+					<option value="same">PLG_SYSTEM_GSSAIIMAGE_CONCEPT_PROVIDER_SAME</option>
+					<option value="openai">PLG_SYSTEM_GSSAIIMAGE_PROVIDER_OPENAI</option>
+					<option value="gemini">PLG_SYSTEM_GSSAIIMAGE_PROVIDER_GEMINI</option>
+					<option value="openwebui">PLG_SYSTEM_GSSAIIMAGE_PROVIDER_OPENWEBUI</option>
+				</field>
+				<field name="openai_text_model" type="text" default="gpt-4.1-mini" showon="use_concept:1"
+					label="PLG_SYSTEM_GSSAIIMAGE_OPENAI_TEXT_MODEL_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_TEXT_MODEL_DESC" />
+				<field name="gemini_text_model" type="text" default="gemini-2.5-flash" showon="use_concept:1"
+					label="PLG_SYSTEM_GSSAIIMAGE_GEMINI_TEXT_MODEL_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_TEXT_MODEL_DESC" />
+				<field name="max_content_chars" type="number" default="3000" min="300" max="20000" step="100" filter="integer"
+					label="PLG_SYSTEM_GSSAIIMAGE_MAX_CONTENT_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_MAX_CONTENT_DESC" />
+			</fieldset>
+
+			<fieldset name="native" label="PLG_SYSTEM_GSSAIIMAGE_FIELDSET_NATIVE" description="PLG_SYSTEM_GSSAIIMAGE_FIELDSET_NATIVE_DESC">
+				<field name="native_admin" type="radio" default="1" layout="joomla.form.field.radio.switcher"
+					label="PLG_SYSTEM_GSSAIIMAGE_NATIVE_ADMIN_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_NATIVE_ADMIN_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="native_site" type="radio" default="1" layout="joomla.form.field.radio.switcher"
+					label="PLG_SYSTEM_GSSAIIMAGE_NATIVE_SITE_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_NATIVE_SITE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="extra_fields" type="text" default="" filter="string"
+					label="PLG_SYSTEM_GSSAIIMAGE_EXTRA_FIELDS_LABEL"
+					description="PLG_SYSTEM_GSSAIIMAGE_EXTRA_FIELDS_DESC" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>
