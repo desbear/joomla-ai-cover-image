@@ -126,7 +126,7 @@ tests/                        tests; see tests/README.md
 
 The unit tests need PHP with GD and zip and no Joomla site; the `joomla_*.php` scripts run against a
 local site from the command line. Pushing a tag `v<version>` builds the package and publishes a
-release through GitHub Actions.
+release, through GitHub Actions on GitHub and through `.gitlab-ci.yml` on GitLab.
 
 ## Security
 
@@ -429,4 +429,4 @@ build.sh                      打包成 dist/pkg_gssaiimage-<版本>.zip
 tests/                        測試，不會被打包
 ```
 
-測試的執行方式見 `tests/README.md`。推送 `v<版本>` 的標籤時，GitHub Actions 會執行測試、打包並建立 release。
+測試的執行方式見 `tests/README.md`。推送 `v<版本>` 的標籤時，GitHub Actions 與 GitLab CI（`.gitlab-ci.yml`）都會執行測試、打包並建立 release。

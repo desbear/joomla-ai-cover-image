@@ -1,0 +1,53 @@
+# Same as .github/workflows/release.yml: lint, run the unit tests, build the package,
+# and on a tag v<version> publish a GitLab release that links to the zip.
+
+stages:
+  - build
+  - release
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v/
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_PIPELINE_SOURCE == "web"
+
+build:
+  stage: build
+  image: php:8.1-cli
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq libpng-dev libjpeg-dev libwebp-dev libzip-dev zip > /dev/null
+    - docker-php-ext-configure gd --with-jpeg --with-webp > /dev/null
+    - docker-php-ext-install -j"$(nproc)" gd zip > /dev/null
+  script:
+    - find plg_system_gssaiimage plg_system_gssaiimageflexi pkg_gssaiimage -name '*.php' -print0 | xargs -0 -n1 php -l > /dev/null
+    - php tests/flow_test.php
+    - php tests/security_test.php
+    - php tests/openwebui_test.php
+    - php tests/catalog_test.php
+    - |
+      if [ -n "$CI_COMMIT_TAG" ]; then
+        VERSION=$(sed -n 's:.*<version>\(.*\)</version>.*:\1:p' pkg_gssaiimage/pkg_gssaiimage.xml | head -1)
+        test "v$VERSION" = "$CI_COMMIT_TAG" || { echo "pkg_gssaiimage.xml version $VERSION does not match tag $CI_COMMIT_TAG"; exit 1; }
+      fi
+    - ./build.sh
+  artifacts:
+    name: pkg_gssaiimage-$CI_COMMIT_REF_NAME
+    paths:
+      - dist/*.zip
+    expire_in: 1 year
+
+release:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  needs: [build]
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v/
+  script:
+    - VERSION=${CI_COMMIT_TAG#v}
+    - awk -v v="$VERSION" '/^## /{if(f)exit; f=index($0,v)>0} f' CHANGELOG.md > notes.md
+    - >
+      release-cli create
+      --tag-name "$CI_COMMIT_TAG"
+      --name "AI Cover Image for Joomla $CI_COMMIT_TAG"
+      --description notes.md
+      --assets-link "{\"name\":\"pkg_gssaiimage-$VERSION.zip\",\"url\":\"$CI_PROJECT_URL/-/jobs/artifacts/$CI_COMMIT_TAG/raw/dist/pkg_gssaiimage-$VERSION.zip?job=build\",\"link_type\":\"package\"}"
